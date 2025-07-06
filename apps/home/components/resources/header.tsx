@@ -42,20 +42,20 @@ interface PostHeaderProps {
 function PostHeader({ metadata }: PostHeaderProps) {
   return (
     <>
-      <h1 className="text-2xl md:text-4xl xl:text-5xl font-normal text-center mb-6 md:mb-12 max-w-4xl mx-auto leading-tight tracking-tight text-foreground">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium -tracking-normal text-center mb-12 max-w-4xl mx-auto leading-tight text-foreground">
         {metadata.title}
       </h1>
 
       {metadata.heroImage ? (
         <>
-          <div className="flex justify-center mb-6 md:mb-12">
+          <div className="flex mb-6 md:mb-12">
             <div className="w-full max-w-4xl">
               <Image 
                 src={metadata.heroImage} 
                 alt={`Hero image for ${metadata.title}`} 
-                className="w-full h-auto rounded-2xl" 
-                width={1200} 
-                height={630} 
+                className="w-[550px] h-auto rounded-2xl mx-auto" 
+                width={550} 
+                height={309} 
                 priority={true} 
               />
             </div>

@@ -23,10 +23,12 @@ import "./styles.css";
 import { Providers } from "@/components/providers";
 
 // Local Components ----
-import MainNavbar from "@/components/navbar";
+// import MainNavbar from "@/components/navbar";
+import Navbar from "@/components/navbar2";
 
 // Metadata ---
 import { AstralMetadata } from "@workspace/ui/constants/metadata";
+import { Footer } from "@/components/footer";
 /* ==========================================================================*/
 // Fonts
 /* ==========================================================================*/
@@ -71,11 +73,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${fontSans.variable} ${fontMono.variable} ${fontManrope.variable} ${fontInter.variable} font-inter antialiased`}>
+      <body className={`${fontSans.variable} ${fontMono.variable} ${fontManrope.variable} ${fontInter.variable} font-inter antialiased w-full`}>
         <Providers>
-          <MainNavbar />
+          <Navbar />
           {children}
-          {/* <Footer /> */}
+          <Footer />
         </Providers>
         <Analytics />
         <SpeedInsights />

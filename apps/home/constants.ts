@@ -8,19 +8,10 @@
 // Shared Constants
 /* ==========================================================================*/
 
-const announcement = {
-  text: "🚀 New: Read our vision for the future of AI development",
-  button: {
-    text: "🚀 New: See Our Vision",
-    href: "/resources/future-vision",
-    external: true,
-  },
-};
+
 
 const footer = {
   copyright: "© 2025 Astral. All rights reserved.",
-  contact: "Contact Us",
-  linkedin: "LinkedIn",
 };
 
 
@@ -43,7 +34,6 @@ const enterpriseConstants = {
         external: true,
       },
     ],
-    announcement: announcement,
     auth: {
       signup: {
         text: "Get Started",
@@ -63,7 +53,7 @@ const enterpriseConstants = {
     subtitle: "Astral is your company's operating system for the AI era.",
     primary: {
       text: "Get Started",
-      href: "/enterprise/deploy",
+      href: "/get-started",
       external: false,
     },
     secondary: {

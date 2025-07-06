@@ -15,7 +15,12 @@ import { easeInOut, motion, useReducedMotion } from "motion/react";
  * Day-to-night themed toggle with celestial transition animations.
  * Sun sets while moon rises, creating a natural day/night cycle effect.
  */
-export function ModeToggle() {
+
+interface ModeToggleProps {
+  size?: "sm" | "md" | "lg";
+}
+
+export function ModeToggle({ size = "sm" }: ModeToggleProps) {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
@@ -30,6 +35,15 @@ export function ModeToggle() {
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
+
+  // Size configurations
+  const sizeConfig = {
+    sm: { container: "size-3", icon: "size-3.5" },
+    md: { container: "size-5", icon: "size-5" },
+    lg: { container: "size-7", icon: "size-7" }
+  };
+
+  const currentSize = sizeConfig[size];
 
   // Animation variants based on reduced motion preference
   const sunVariants = shouldReduceMotion
@@ -96,13 +110,13 @@ export function ModeToggle() {
   if (!mounted || resolvedTheme === undefined) {
     return (
       <div
-        className="relative flex h-4.5 w-4.5 cursor-pointer items-center justify-center opacity-0"
+        className={`relative flex ${currentSize.container} cursor-pointer items-center justify-center opacity-0`}
         role="button"
         tabIndex={0}
         aria-label="Toggle theme"
         title="Toggle between day and night"
       >
-        <Sun className="h-4 w-4" />
+        <Sun className={currentSize.icon} />
         <span className="sr-only">Toggle between day and night theme</span>
       </div>
     );
@@ -111,7 +125,7 @@ export function ModeToggle() {
   return (
     <motion.div
       onClick={toggleTheme}
-      className="relative flex h-4.5 w-4.5 cursor-pointer items-center justify-center focus-visible:outline-none"
+      className={`relative flex ${currentSize.container} cursor-pointer items-center justify-center focus-visible:outline-none`}
       {...containerAnimationProps}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
@@ -135,7 +149,7 @@ export function ModeToggle() {
         initial={false}
         suppressHydrationWarning
       >
-        <Sun className={`h-4 w-4 transition-colors duration-200 ${
+        <Sun className={`${currentSize.icon} transition-colors duration-200 ${
           isHovered || isDark ? 'text-amber-500' : ''
         }`} />
       </motion.div>
@@ -148,7 +162,7 @@ export function ModeToggle() {
         initial={false}
         suppressHydrationWarning
       >
-        <Moon className={`h-4 w-4 transition-colors duration-200 ${
+        <Moon className={`${currentSize.icon} transition-colors duration-200 ${
           isHovered || isDark ? 'text-slate-300' : ''
         }`} />
       </motion.div>

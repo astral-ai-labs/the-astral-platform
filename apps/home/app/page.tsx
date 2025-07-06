@@ -10,7 +10,11 @@
 // External Packages ---
 
 // Local Components ---
+import { EnterpriseLogos } from "@/components/home/logos";
 import { Hero } from "@/components/home/hero";
+import { Features } from "@/components/home/features";
+import { HowItWorks } from "@/components/home/how-it-works";
+import { Faqs } from "@/components/home/faqs";
 
 /* ==========================================================================*/
 // Home Page Component
@@ -23,10 +27,22 @@ import { Hero } from "@/components/home/hero";
  */
 export default function Page() {
   return (
-    <div className="w-full fixed top-0 left-0">
+    <div className="w-full">
 
       {/* Hero Section --- */}
       <Hero />
+
+      {/* Enterprise Logos --- */}
+      <EnterpriseLogos />
+
+      {/* Features Section --- */}
+      <Features />
+
+      {/* How It Works Section --- */}
+      <HowItWorks />
+
+      {/* FAQ Section --- */}
+      <Faqs />
 
       {/* TODO: Other Sections --- */}
     </div>

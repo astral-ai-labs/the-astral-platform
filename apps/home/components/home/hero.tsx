@@ -141,15 +141,24 @@ function Hero({ className }: HeroProps) {
         transition: ANIMATION_TRANSITIONS.hover,
       };
 
+  // Hover animation props for primary button (matching navbar)
+  const primaryHoverProps = shouldReduceMotion
+    ? {}
+    : {
+        whileHover: { scale: 1.035 },
+        whileTap: { scale: 0.95 },
+        transition: { duration: 0.1, ease: easeInOut },
+      };
+
   return (
-    <div className={`relative  ${className || ""}`}>
-      <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div className="mx-auto max-w-full lg:max-w-4xl xl:max-w-5xl py-16 sm:py-30 md:py-32 md:px-6">
+    <div className={`relative home-section-spacing ${className || ""}`}>
+      <div className="relative isolate px-6 pt-6 sm:pt-30 md:pt-32 lg:px-8">
+        <div className="mx-auto max-w-full lg:max-w-4xl xl:max-w-5xl md:px-6">
           {/* Main Content --- */}
           <div className="text-left">
             {/* Title with TextEffect --- */}
             <TextEffect 
-              className="max-w-2xl lg:max-w-3xl xl:max-w-6xl text-[51px] md:text-6xl tracking-tight text-zinc-900 dark:text-zinc-100 leading-tight" 
+              className="max-w-2xl lg:max-w-3xl xl:max-w-6xl text-[51px] md:text-6xl tracking-tight text-zinc-900 dark:text-zinc-100 leading-tight min-[400px]:mr-5 md:mr-0" 
               preset={TEXT_EFFECT_CONFIG.title.preset} 
               as="h1" 
               per="char" 
@@ -160,7 +169,7 @@ function Hero({ className }: HeroProps) {
             </TextEffect>
 
             <TextEffect 
-              className="mt-6 sm:mt-8 text-pretty text-xl md:text-2xl max-w-xs sm:max-w-none text-zinc-500 dark:text-zinc-300 leading-relaxed" 
+              className="mt-6 sm:mt-8 text-pretty text-xl md:text-2xl max-w-[430px] sm:max-w-none text-zinc-500 dark:text-zinc-300 leading-relaxed" 
               preset={TEXT_EFFECT_CONFIG.subtitle.preset} 
               as="p" 
               per="char" 
@@ -182,6 +191,7 @@ function Hero({ className }: HeroProps) {
               <motion.a 
                 href={constants.cta.primary.href} 
                 className="rounded-md bg-zinc-900 px-4 py-2 md:px-5 md:py-2 text-base font-medium text-white shadow-sm hover:bg-zinc-700 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-zinc-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 dark:shadow-lg"
+                {...primaryHoverProps}
               >
                 <motion.span    
                   variants={FLIP_VARIANTS}
@@ -196,7 +206,7 @@ function Hero({ className }: HeroProps) {
               </motion.a>
               <motion.a 
                 href={constants.cta.secondary.href} 
-                className="hidden md:inline-flex items-center gap-1 text-sm/6 font-semibold text-zinc-900 dark:text-zinc-200" 
+                className="inline-flex items-center gap-1 text-sm/6 font-semibold text-zinc-900 dark:text-zinc-200" 
                 {...secondaryHoverProps}
                 whileHover="hover"
               >
