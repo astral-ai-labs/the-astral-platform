@@ -17,7 +17,6 @@ import { Metadata } from "next";
 
 // External Packages ---
 import * as motion from "motion/react-client";
-import { easeInOut } from "motion/react";
 
 // Local Utils ----
 import { PostMetadata } from "@/lib/mdx-utils";
@@ -44,32 +43,7 @@ interface MDXModule {
 // Animation Variants
 /* ==========================================================================*/
 
-const CONTAINER_VARIANTS = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
-  },
-};
 
-const ITEM_VARIANTS = {
-  hidden: {
-    opacity: 0,
-    y: 8,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-    },
-  },
-};
 
 const ARTICLE_VARIANTS = {
   hidden: {
@@ -84,8 +58,8 @@ const ARTICLE_VARIANTS = {
     transition: {
       duration: 0.8,
       delay: 2.5,
-      ease: easeInOut,
     },
+    ease: "easeInOut",
   },
 };
 

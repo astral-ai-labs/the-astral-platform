@@ -215,5 +215,5 @@ async function Resource({ params }: PageProps) {
   }
 
 
-export { generateMetadata, generateStaticParams, Resource, dynamicParams };
+export { generateMetadata, generateStaticParams, dynamicParams };
 export default Resource;

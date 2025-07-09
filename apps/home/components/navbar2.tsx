@@ -28,6 +28,9 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetHeader } from "@wor
 import { cn } from "@workspace/ui/lib/utils";
 import { Separator } from "@workspace/ui/components/separator";
 
+// Local Constants ---
+import { navbarConstants } from "@/constants";
+
 /* ==========================================================================*/
 // Animation Variants
 /* ==========================================================================*/
@@ -69,38 +72,6 @@ const ANIMATION_TRANSITIONS = {
     ease: easeInOut,
   },
 };
-
-/* ==========================================================================*/
-// Navigation Data
-/* ==========================================================================*/
-
-const navigationLinks = [
-  {
-    label: "Vision",
-    href: "/company/vision",
-    external: false,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/company/buildwithastral",
-    external: true,
-  },
-  {
-    label: "Careers",
-    href: "/company/careers",
-    external: false,
-  },
-  {
-    label: "Platform",
-    href: "https://platform.astral.com",
-    external: true,
-  },
-  {
-    label: "Blog",
-    href: "/blog",
-    external: false,
-  },
-];
 
 /* ==========================================================================*/
 // Components
@@ -204,7 +175,7 @@ export default function Navbar() {
                 {/* Company Dropdown */}
                 <NavigationMenuItem>
                   <motion.div {...hoverOnlyAnimationProps}>
-                    <NavigationMenuTrigger className={cn("bg-transparent !hover:bg-background")}>Company</NavigationMenuTrigger>
+                    <NavigationMenuTrigger className={cn("bg-transparent !hover:bg-background")}>{navbarConstants.company.trigger}</NavigationMenuTrigger>
                   </motion.div>
                   <NavigationMenuContent>
                     <ul className="grid gap-2 w-[500px] grid-cols-[1fr_1fr]">
@@ -213,50 +184,43 @@ export default function Navbar() {
                           <Link className="group flex h-full w-full select-none flex-col justify-center items-start p-4 rounded-md" href="/">
                             <AstralFull className="size-19 text-foreground transition-all duration-200 ease-in-out group-hover:scale-[1.02]" />
                             <div className="flex items-center gap-1 mt-[-10px]">
-                              <p className="text-xs leading-tight text-muted-foreground group-hover:text-foreground transition-colors duration-100 ease-in-out text-left w-4/5">The official operating system for the age of AI.</p>
+                              <p className="text-xs leading-tight text-muted-foreground group-hover:text-foreground transition-colors duration-100 ease-in-out text-left w-4/5">{navbarConstants.company.description}</p>
                               {!shouldReduceMotion && <ArrowRight className="size-3 text-foreground origin-left scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100 transition-all duration-100 ease-in-out w-1/5" />}
                             </div>
                           </Link>
                         </NavigationMenuLink>
                       </li>
-                      <ListItem href="/company/vision" title="Vision">
-                        Our mission to help companies dominate the age of AI.
-                      </ListItem>
-                      <ListItem href="https://www.linkedin.com/company/buildwithastral" title="LinkedIn">
-                        Connect with us as we eliminate operational inefficiencies.
-                      </ListItem>
-                      <ListItem href="/company/careers" title="Careers">
-                        Build the infrastructure that makes human limitations obsolete.
-                      </ListItem>
+                      {navbarConstants.company.links.map((link) => (
+                        <ListItem key={link.href} href={link.href} title={link.label}>
+                          {link.description}
+                        </ListItem>
+                      ))}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* Platform Link */}
-                <NavigationMenuItem>
-                  <motion.div {...hoverAnimationProps}>
-                    <Link href="https://platform.astral.com" legacyBehavior passHref>
-                      <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent !hover:bg-background")} target="_blank" rel="noopener noreferrer">
-                        Platform
-                      </NavigationMenuLink>
-                    </Link>
-                  </motion.div>
-                </NavigationMenuItem>
-
-                {/* Blog Link */}
-                <NavigationMenuItem>
-                  <motion.div {...hoverAnimationProps}>
-                    <Link href="/blog" legacyBehavior passHref>
-                      <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent !hover:bg-background")}>Blog</NavigationMenuLink>
-                    </Link>
-                  </motion.div>
-                </NavigationMenuItem>
+                {/* Navigation Links */}
+                {navbarConstants.navigation.map((navItem) => (
+                  <NavigationMenuItem key={navItem.href}>
+                    <motion.div {...hoverAnimationProps}>
+                      <Link href={navItem.href} legacyBehavior passHref>
+                        <NavigationMenuLink 
+                          className={cn(navigationMenuTriggerStyle(), "bg-transparent !hover:bg-background")} 
+                          target={navItem.external ? "_blank" : undefined} 
+                          rel={navItem.external ? "noopener noreferrer" : undefined}
+                        >
+                          {navItem.label}
+                        </NavigationMenuLink>
+                      </Link>
+                    </motion.div>
+                  </NavigationMenuItem>
+                ))}
               </NavigationMenuList>
             </NavigationMenu>
 
             <motion.div {...hoverAnimationProps}>
               <Button asChild className={cn("hidden md:flex", "shrink-0 py-0 h-8 px-3")}>
-                <Link href="/get-started">Get Started</Link>
+                <Link href={navbarConstants.buttons.getStartedHref}>{navbarConstants.buttons.getStarted}</Link>
               </Button>
             </motion.div>
 
@@ -308,7 +272,7 @@ export default function Navbar() {
                         
                         {/* Navigation Items */}
                         <div className="relative">
-                          {navigationLinks.map((link, index) => (
+                          {navbarConstants.mobile.allLinks.map((link, index) => (
                             <div 
                               key={link.href}
                               onMouseEnter={() => setHoveredIndex(index)}
