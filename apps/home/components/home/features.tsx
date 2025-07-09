@@ -61,6 +61,27 @@ interface FeatureCardProps {
   className?: string;
 }
 
+interface TiltWrapperProps {
+  children: React.ReactNode;
+  enabled: boolean;
+}
+
+/* ==========================================================================*/
+// Tilt Wrapper Component
+/* ==========================================================================*/
+
+/**
+ * TiltWrapper
+ *
+ * Conditionally wraps children in Tilt component based on enabled prop.
+ */
+function TiltWrapper({ children, enabled }: TiltWrapperProps) {
+  if (enabled) {
+    return <Tilt rotationFactor={2.5}>{children}</Tilt>;
+  }
+  return <>{children}</>;
+}
+
 /* ==========================================================================*/
 // Feature Card Component
 /* ==========================================================================*/
@@ -75,79 +96,77 @@ function FeatureCard({ icon: Icon, text, description, className }: FeatureCardPr
   const [isClicked, setIsClicked] = useState(false);
 
   return (
-    <Tilt rotationFactor={2.5}>
-      <div 
-        className={`bg-gradient-to-br from-muted/80 dark:from-muted/20 via-card/90 dark:via-card/10 to-muted/70 dark:to-muted/30 border border-border rounded-lg p-6 relative cursor-pointer transition-all duration-200 ${className || ""}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={() => setIsClicked(!isClicked)}
-      >
-        <div className="absolute top-4 left-4">
-          <Icon className="w-5 h-5 text-muted-foreground" />
+    <div 
+      className={`bg-gradient-to-br from-muted/80 dark:from-muted/20 via-card/90 dark:via-card/10 to-muted/70 dark:to-muted/30 border border-border rounded-lg p-6 relative cursor-pointer transition-all duration-200 ${className || ""}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => setIsClicked(!isClicked)}
+    >
+      <div className="absolute top-4 left-4">
+        <Icon className="w-5 h-5 text-muted-foreground" />
+      </div>
+      
+      {/* Mobile - Click to toggle with icon */}
+      <div className="md:hidden">
+        <div className="absolute bottom-4 right-4 flex items-center gap-2">
+          <span className="text-xs text-muted-foreground">
+            {text}
+          </span>
+          {isClicked ? (
+            <ChevronUp className="w-3 h-3 text-muted-foreground" />
+          ) : (
+            <ChevronDown className="w-3 h-3 text-muted-foreground" />
+          )}
         </div>
         
-        {/* Mobile - Click to toggle with icon */}
-        <div className="md:hidden">
-          <div className="absolute bottom-4 right-4 flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">
-              {text}
-            </span>
-            {isClicked ? (
-              <ChevronUp className="w-3 h-3 text-muted-foreground" />
-            ) : (
-              <ChevronDown className="w-3 h-3 text-muted-foreground" />
-            )}
-          </div>
-          
-          <AnimatePresence>
-            {isClicked && (
-              <motion.div
-                className="absolute bottom-12 right-4 max-w-64"
+        <AnimatePresence>
+          {isClicked && (
+            <motion.div
+              className="absolute bottom-12 right-4 max-w-64"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.3, ease: easeInOut }}
+            >
+              <p className="text-xs text-muted-foreground text-right text-balance leading-relaxed">
+                {description}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Desktop - Hover to show description */}
+      <div className="hidden md:block">
+        <div className="absolute bottom-4 right-4 max-w-64">
+          <AnimatePresence mode="wait">
+            {!isHovered ? (
+              <motion.span
+                key="normal-text"
+                className="text-xs text-muted-foreground text-right block"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
+                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3, ease: easeInOut }}
               >
-                <p className="text-xs text-muted-foreground text-right text-balance leading-relaxed">
-                  {description}
-                </p>
-              </motion.div>
+                {text}
+              </motion.span>
+            ) : (
+              <motion.p
+                key="description"
+                className="text-xs text-muted-foreground text-right text-balance leading-relaxed"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: easeInOut }}
+              >
+                {description}
+              </motion.p>
             )}
           </AnimatePresence>
         </div>
-
-        {/* Desktop - Hover to show description */}
-        <div className="hidden md:block">
-          <div className="absolute bottom-4 right-4 max-w-64">
-            <AnimatePresence mode="wait">
-              {!isHovered ? (
-                <motion.span
-                  key="normal-text"
-                  className="text-xs text-muted-foreground text-right block"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3, ease: easeInOut }}
-                >
-                  {text}
-                </motion.span>
-              ) : (
-                <motion.p
-                  key="description"
-                  className="text-xs text-muted-foreground text-right text-balance leading-relaxed"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3, ease: easeInOut }}
-                >
-                  {description}
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
       </div>
-    </Tilt>
+    </div>
   );
 }
 
@@ -176,17 +195,34 @@ function Features({ className }: FeaturesProps) {
             </p>
           </div>
 
-          {/* 3 Cards - Always horizontal scroll */}
-          <div className="mt-16 lg:mt-20">
+          {/* 3 Cards - Without Tilt (screens < lg) */}
+          <div className="mt-16 lg:mt-20 block lg:hidden">
             <div className="flex gap-6 overflow-x-auto scrollbar-hide">
               {homeConstants.features.items.map((feature, index) => (
-                <FeatureCard
-                  key={index}
-                  icon={feature.icon}
-                  text={feature.text}
-                  description={feature.description}
-                  className="flex-shrink-0 w-80 h-64"
-                />
+                <TiltWrapper key={index} enabled={false}>
+                  <FeatureCard
+                    icon={feature.icon}
+                    text={feature.text}
+                    description={feature.description}
+                    className="flex-shrink-0 w-80 h-64"
+                  />
+                </TiltWrapper>
+              ))}
+            </div>
+          </div>
+
+          {/* 3 Cards - With Tilt (screens lg+) */}
+          <div className="mt-16 lg:mt-20 hidden lg:block">
+            <div className="flex gap-6 overflow-x-auto scrollbar-hide">
+              {homeConstants.features.items.map((feature, index) => (
+                <TiltWrapper key={index} enabled={true}>
+                  <FeatureCard
+                    icon={feature.icon}
+                    text={feature.text}
+                    description={feature.description}
+                    className="flex-shrink-0 w-80 h-64"
+                  />
+                </TiltWrapper>
               ))}
             </div>
           </div>

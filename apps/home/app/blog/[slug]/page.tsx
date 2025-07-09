@@ -20,9 +20,6 @@ import Image from "next/image";
 import { getPostSlugs, PostMetadata } from "@/lib/mdx-utils";
 
 // Local Components ----
-import { ResourceButton } from "@/components/ui/resource-button";
-import Link from "next/link";
-import { Breadcrumbs } from "@/components/resources/breadcrumbs";
 import { PostFooter } from "@/components/resources/footer";
 import { ContentHeader } from "@/components/resources/content-header";
 
@@ -161,7 +158,7 @@ async function generateStaticParams() {
 /* ==========================================================================*/
 
 // Disable dynamic params to return 404 for unknown routes
-const dynamicParams = false;
+export const dynamicParams = false;
 
 
 /* ==========================================================================*/
@@ -215,5 +212,5 @@ async function Resource({ params }: PageProps) {
   }
 
 
-export { generateMetadata, generateStaticParams, dynamicParams };
+export { generateMetadata, generateStaticParams };
 export default Resource;
