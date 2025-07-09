@@ -131,7 +131,7 @@ export async function getPosts(): Promise<{
         uid: slug,
         title: title,
         description: `A blog on ${title}`,
-        link: `/resources/${slug}`,
+        link: `/blog/${slug}`,
       });
     }
 

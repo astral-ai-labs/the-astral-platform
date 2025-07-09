@@ -12,7 +12,7 @@
 
 // React core ---
 import type React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // External Packages ---
 import { motion, useReducedMotion, easeInOut } from "motion/react";
@@ -144,11 +144,28 @@ export default function Navbar() {
   const shouldReduceMotion = useReducedMotion();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoverStyle, setHoverStyle] = useState({});
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Ensure component is mounted on client to prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Update hover style when hoveredIndex changes
+  useEffect(() => {
+    if (hoveredIndex !== null) {
+      const hoveredElement = itemRefs.current[hoveredIndex];
+      if (hoveredElement) {
+        const { offsetTop, offsetHeight } = hoveredElement;
+        setHoverStyle({
+          top: `${offsetTop}px`,
+          height: `${offsetHeight}px`,
+        });
+      }
+    }
+  }, [hoveredIndex]);
 
   // Animation props - conditionally applied based on reduced motion preference
   const hoverAnimationProps = shouldReduceMotion ? {} : HOVER_ANIMATION_PROPS;
@@ -270,26 +287,50 @@ export default function Navbar() {
                   <span className="sr-only">Toggle navigation menu</span>
                 </motion.button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[320px] sm:w-[380px] flex flex-col">
-                <SheetHeader className="pb-6">
-                  <SheetTitle className="sr-only">
-                    <span className="text-sm font-medium text-muted-foreground">Theme</span>
-                    <ModeToggle />
-                  </SheetTitle>
+              <SheetContent side="right" className="w-[320px] sm:w-[380px] flex flex-col bg-background">
+                <SheetHeader className="pb-4">
+                  <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 </SheetHeader>
 
                 <div className="flex-1 flex flex-col justify-between py-6 px-2">
                   {/* Navigation Links */}
                   <nav className="space-y-1">
-                    <div className="mb-6">
-                      <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Navigation</h3>
-                      <div className="space-y-1">
-                        {navigationLinks.map((link) => (
-                          <Link key={link.href} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-between group w-full px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-all duration-200">
-                            <span>{link.label}</span>
-                            {link.external && <ExternalLink className="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />}
-                          </Link>
-                        ))}
+                    <div className="mb-4">
+                      <div className="space-y-1 relative">
+                        {/* Hover Highlight Background */}
+                        <div
+                          className="absolute left-0 right-0 transition-all duration-300 ease-out bg-muted/30 dark:bg-muted/20 rounded-lg"
+                          style={{
+                            ...hoverStyle,
+                            opacity: hoveredIndex !== null ? 1 : 0,
+                          }}
+                        />
+                        
+                        {/* Navigation Items */}
+                        <div className="relative">
+                          {navigationLinks.map((link, index) => (
+                            <div 
+                              key={link.href}
+                              onMouseEnter={() => setHoveredIndex(index)}
+                              onMouseLeave={() => setHoveredIndex(null)}
+                              ref={(el) => { itemRefs.current[index] = el; }}
+                              className="py-3 px-3 rounded-lg cursor-pointer relative z-10 transition-all duration-200"
+                            >
+                              <Link 
+                                href={link.href} 
+                                target={link.external ? "_blank" : undefined} 
+                                rel={link.external ? "noopener noreferrer" : undefined} 
+                                onClick={() => setMobileMenuOpen(false)} 
+                                className="flex items-center justify-between group w-full text-base font-medium text-foreground"
+                              >
+                                <span>{link.label}</span>
+                                {link.external && (
+                                  <ExternalLink className="size-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                                )}
+                              </Link>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </nav>
@@ -297,13 +338,11 @@ export default function Navbar() {
                   {/* Bottom Section */}
                   <div className="space-y-4">
                     <Separator />
-
-                    {/* CTA Button */}
-                    <div className="px-8 flex justify-center items-center max-w-full">
-                      <div className="w-1/5">
-                        <ModeToggle size="md" />
-                      </div>
-                      <Button asChild className="w-4/5" size="lg">
+                    
+                    {/* CTA Button and Theme Toggle */}
+                    <div className="flex items-center justify-between px-3">
+                      <ModeToggle />
+                      <Button asChild size="sm">
                         <Link href="/get-started" onClick={() => setMobileMenuOpen(false)}>
                           Get Started
                         </Link>

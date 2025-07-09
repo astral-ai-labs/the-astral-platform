@@ -15,7 +15,7 @@ import { ContentHeader } from "@/components/resources/content-header";
 import { CareersSection } from "@/components/careers/careers-section";
 
 // Local Constants ---
-import { careersConstants } from "@/constants2";
+import { careersConstants } from "@/constants";
 
 /* ==========================================================================*/
 // Component

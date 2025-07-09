@@ -128,44 +128,7 @@ function generateDate(index: number): string {
 // Dummy Data
 /* ==========================================================================*/
 
-const DUMMY_ARTICLES: ArticleWithDate[] = [
-  {
-    uid: "scale-linear-migration",
-    title: "Why and how Scale migrated to Linear",
-    date: "November 15, 2024",
-    link: "/blog/scale-linear-migration"
-  },
-  {
-    uid: "pleo-linear-asks", 
-    title: "Simplifying support at scale: How Pleo uses Linear Asks",
-    date: "November 11, 2024",
-    link: "/blog/pleo-linear-asks"
-  },
-  {
-    uid: "multi-region-support",
-    title: "How we built multi-region support for Linear",
-    date: "May 23, 2024",
-    link: "/blog/multi-region-support"
-  },
-  {
-    uid: "linear-ui-redesign-part-2",
-    title: "How we redesigned the Linear UI (part II)",
-    date: "March 28, 2024",
-    link: "/blog/linear-ui-redesign-part-2"
-  },
-  {
-    uid: "design-reset-part-1",
-    title: "A design reset (part I)",
-    date: "March 27, 2024",
-    link: "/blog/design-reset-part-1"
-  },
-  {
-    uid: "startup-mvp-competitive-product",
-    title: "Rethinking the startup MVP: Building a competitive product",
-    date: "February 28, 2024",
-    link: "/blog/startup-mvp-competitive-product"
-  }
-];
+// Removed DUMMY_ARTICLES - replaced with "Coming Soon!" message
 
 /* ==========================================================================*/
 // Components
@@ -282,7 +245,7 @@ function ArticlesSection({ featuredPosts, morePosts, className }: ArticlesSectio
   }));
 
   // Combine actual posts with dummy articles for testing
-  const allArticles = [...morePostsWithDates, ...DUMMY_ARTICLES];
+  const allArticles = [...morePostsWithDates];
 
   useEffect(() => {
     if (hoveredIndex !== null) {
@@ -347,20 +310,28 @@ function ArticlesSection({ featuredPosts, morePosts, className }: ArticlesSectio
           
           {/* Articles */}
           <div className="relative">
-            {allArticles.map((article, index) => (
-              <div
-                key={article.uid || index}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                <ArticleListItem
-                  title={article.title}
-                  date={article.date}
-                  link={article.link}
-                  itemRef={(el) => (itemRefs.current[index] = el)}
-                />
-              </div>
-            ))}
+            {allArticles.length === 0 ? (
+              <motion.div variants={WRITING_ITEM_VARIANTS}>
+                <p className="text-center py-8 text-muted-foreground">
+                  Coming Soon!
+                </p>
+              </motion.div>
+            ) : (
+              allArticles.map((article, index) => (
+                <div
+                  key={article.uid || index}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <ArticleListItem
+                    title={article.title}
+                    date={article.date}
+                    link={article.link}
+                    itemRef={(el) => (itemRefs.current[index] = el)}
+                  />
+                </div>
+              ))
+            )}
           </div>
         </div>
       </motion.div>

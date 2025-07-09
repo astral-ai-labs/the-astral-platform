@@ -21,7 +21,7 @@ import { ArrowRight } from "lucide-react";
 import { TextEffect } from "@workspace/ui/components/text-effect";
 
 // Local Constants ---
-import { enterpriseConstants } from "@/constants";
+import { homeConstants } from "@/constants";
 
 /* ==========================================================================*/
 // Animation Variants
@@ -130,7 +130,7 @@ interface HeroProps {
  */
 function Hero({ className }: HeroProps) {
   const shouldReduceMotion = useReducedMotion();
-  const constants = enterpriseConstants;
+  const constants = homeConstants;
 
   // Hover animation props for secondary button
   const secondaryHoverProps = shouldReduceMotion
@@ -165,7 +165,7 @@ function Hero({ className }: HeroProps) {
               speedReveal={TEXT_EFFECT_CONFIG.title.speedReveal} 
               segmentTransition={TEXT_EFFECT_CONFIG.title.segmentTransition}
             >
-              {constants.cta.titleDesktop}
+              {constants.hero.titleDesktop}
             </TextEffect>
 
             <TextEffect 
@@ -177,7 +177,7 @@ function Hero({ className }: HeroProps) {
               speedReveal={TEXT_EFFECT_CONFIG.subtitle.speedReveal} 
               segmentTransition={TEXT_EFFECT_CONFIG.subtitle.segmentTransition}
             >
-              {constants.cta.subtitle}
+              {constants.hero.subtitle}
             </TextEffect>
 
             {/* Call to Action Buttons --- */}
@@ -189,7 +189,7 @@ function Hero({ className }: HeroProps) {
               transition={ANIMATION_TRANSITIONS.secondaryCta}
             >
               <motion.a 
-                href={constants.cta.primary.href} 
+                href={constants.hero.primary.href} 
                 className="rounded-md bg-zinc-900 px-4 py-2 md:px-5 md:py-2 text-base font-medium text-white shadow-sm hover:bg-zinc-700 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-zinc-600 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 dark:shadow-lg"
                 {...primaryHoverProps}
               >
@@ -201,11 +201,11 @@ function Hero({ className }: HeroProps) {
                   transition={ANIMATION_TRANSITIONS.flip}
                   style={{ transformOrigin: "50% 50%" }}
                 >
-                  {constants.cta.primary.text}
+                  {constants.hero.primary.text}
                 </motion.span>
               </motion.a>
               <motion.a 
-                href={constants.cta.secondary.href} 
+                href={constants.hero.secondary.href} 
                 className="inline-flex items-center gap-1 text-sm/6 font-semibold text-zinc-900 dark:text-zinc-200" 
                 {...secondaryHoverProps}
                 whileHover="hover"
@@ -218,7 +218,7 @@ function Hero({ className }: HeroProps) {
                   transition={ANIMATION_TRANSITIONS.flip}
                   style={{ transformOrigin: "50% 50%" }}
                 >
-                  {constants.cta.secondary.text}
+                  {constants.hero.secondary.text}
                 </motion.span>
                 <motion.div
                   variants={HOVER_VARIANTS.arrow}

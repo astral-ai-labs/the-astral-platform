@@ -19,7 +19,7 @@ import { ArticlesSection } from "@/components/blog/articles-section";
 import { getPosts } from "@/lib/mdx-utils";
 
 // Local Constants ---
-import { blogConstants } from "@/constants2";
+import { blogConstants } from "@/constants";
 
 /* ==========================================================================*/
 // Component

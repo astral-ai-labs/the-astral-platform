@@ -29,7 +29,7 @@ import { PostMetadataDisplay } from "@/components/resources/metadata";
 import { PostFooter } from "@/components/resources/footer";
 
 // Local Constants ---
-import { companyConstants } from "@/constants2";
+import { companyConstants } from "@/constants";
 
 /* ==========================================================================*/
 // Types

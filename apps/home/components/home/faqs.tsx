@@ -25,7 +25,7 @@ import {
 } from "../motion-primitives/accordion";
 
 // Local Constants ---
-import { homeConstants } from "@/constants2";
+import { homeConstants } from "@/constants";
 
 /* ==========================================================================*/
 // Data
@@ -87,9 +87,15 @@ function Faqs({ className }: FaqsProps) {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <p className="pt-2 text-muted-foreground leading-relaxed">
-                        {item.content}
-                      </p>
+                      <div className="pt-4 text-muted-foreground leading-relaxed space-y-4">
+                        {Array.isArray(item.content) ? (
+                          item.content.map((paragraph, index) => (
+                            <p key={index}>{paragraph}</p>
+                          ))
+                        ) : (
+                          <p>{item.content}</p>
+                        )}
+                      </div>
                     </AccordionContent>
                   </AccordionItem>
                 ))}

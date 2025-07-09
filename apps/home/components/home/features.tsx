@@ -21,7 +21,7 @@ import { motion, AnimatePresence, easeInOut } from "motion/react";
 import { Tilt } from "../motion-primitives/tilt";
 
 // Local Constants ---
-import { homeConstants } from "@/constants2";
+import { homeConstants } from "@/constants";
 
 /* ==========================================================================*/
 // Animation Variants

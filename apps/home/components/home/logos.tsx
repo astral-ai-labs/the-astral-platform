@@ -18,7 +18,7 @@ import { InfiniteSlider } from "../motion-primitives/infinite-slider";
 import { Blackrock, Cornell, Ibm, Tesla, Yc } from "../experience-logos/index"
 
 // Local Constants ---
-import { homeConstants } from "@/constants2";
+import { homeConstants } from "@/constants";
 
 /* ==========================================================================*/
 // Data

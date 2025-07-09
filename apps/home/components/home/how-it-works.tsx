@@ -32,7 +32,7 @@ import {
 } from "../motion-primitives/morphing-dialog";
 
 // Local Constants ---
-import { homeConstants } from "@/constants2";
+import { homeConstants } from "@/constants";
 
 /* ==========================================================================*/
 // Data
