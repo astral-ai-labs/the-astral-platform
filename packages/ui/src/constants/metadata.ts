@@ -9,10 +9,10 @@
 /* ==========================================================================*/
 // Constants
 /* ==========================================================================*/
-const TITLE = "Astral AI";
-const DESCRIPTION = "Astral is an open-source framework for AI engineers that abstracts away the complexity and friction of working across multiple model providers.";
+const TITLE = "astral";
+const DESCRIPTION = "astral is your company's operating system for the AI era.";
 const BASE_URL = "https://useastral.dev";
-const SITE_NAME = "Astral AI";
+const SITE_NAME = "astral";
 
 // const OPEN_GRAPH_IMAGES = [
 //   {
