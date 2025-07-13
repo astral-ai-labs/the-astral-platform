@@ -19,7 +19,7 @@ import { redirect } from "next/navigation";
 // External Packages ---
 import { cn } from "@/lib/utils";
 import { motion, easeInOut, AnimatePresence } from "motion/react";
-import { Info, Check } from "lucide-react";
+import { Info, Check, AlertTriangle } from "lucide-react";
 
 // Local Components ---
 import { Button } from "@workspace/ui/components/button";
@@ -333,6 +333,19 @@ function LoginForm({ className, errors, isPending, ...props }: LoginFormProps) {
               Let&apos;s get to work.
             </TextEffect>
           </div>
+
+          {/* Invite Only Alert --- */}
+          <motion.div 
+            className="p-4 border border-border rounded-lg mb-8 text-center"
+            variants={FIELD_ENTRANCE_VARIANTS}
+          >
+            <div className="flex items-center justify-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">
+                Currently invite only.
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Form Fields Container --- */}
@@ -358,14 +371,21 @@ function LoginForm({ className, errors, isPending, ...props }: LoginFormProps) {
                   <LabelWithError htmlFor="email" error={hasEmailError ? emailErrorMessage || undefined : errors?.email?.[0]}>
                     Email
                   </LabelWithError>
-                  <Input id="email" name="email" type="email" placeholder="m@example.com" value={email} onChange={(e) => setEmail(e.target.value)} disabled={isFormLoading} className="transition-all duration-200 focus-visible:ring-0 !text-sm" required />
+                  <Input id="email" name="email" type="email" placeholder="chris@useastral.dev" value={email} onChange={(e) => setEmail(e.target.value)} 
+                    // disabled={isFormLoading} 
+                    disabled={true} 
+                    className="transition-all duration-200 focus-visible:ring-0 !text-sm opacity-60" required />
                 </motion.div>
 
                 {/* Continue Button --- */}
                 <motion.div className="mb-6" variants={FIELD_ENTRANCE_VARIANTS}>
                   <motion.div {...(!(isFormLoading || (currentStep === "email" && !email.trim())) ? HOVER_ANIMATION_PROPS : {})}>
-                    <Button type="submit" className="w-full" disabled={isFormLoading || (currentStep === "email" && !email.trim())}>
-                      {isFormLoading ? "Sending Code..." : "Continue"}
+                    <Button type="submit" className="w-full" 
+                      // disabled={isFormLoading || (currentStep === "email" && !email.trim())}
+                      disabled={true}
+                    >
+                      {/* {isFormLoading ? "Sending Code..." : "Continue"} */}
+                      Continue
                     </Button>
                   </motion.div>
                 </motion.div>
@@ -380,7 +400,7 @@ function LoginForm({ className, errors, isPending, ...props }: LoginFormProps) {
                 {/* Google OAuth Button --- */}
                 <motion.div className="mb-4" variants={FIELD_ENTRANCE_VARIANTS}>
                   <motion.div {...HOVER_ANIMATION_PROPS}>
-                    <Button variant="outline" type="button" className="w-full">
+                    <Button variant="outline" type="button" className="w-full" disabled={true}>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="mr-2 h-4 w-4">
                         <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" fill="currentColor" />
                       </svg>
@@ -417,7 +437,10 @@ function LoginForm({ className, errors, isPending, ...props }: LoginFormProps) {
                     }
                   }}
                 >
-                  <InputOTP ref={otpInputRef} maxLength={6} value={otpValue} onChange={setOtpValue} disabled={isFormLoading || isSuccess} className="focus-visible:ring-0 focus-visible:ring-offset-0">
+                  <InputOTP ref={otpInputRef} maxLength={6} value={otpValue} onChange={setOtpValue} 
+                    // disabled={isFormLoading || isSuccess} 
+                    disabled={true} 
+                    className="focus-visible:ring-0 focus-visible:ring-offset-0">
                     <InputOTPGroup className="flex items-center justify-center focus-visible:ring-0 focus-visible:ring-offset-0 focus-within:ring-0 focus-within:ring-offset-0">
                       <InputOTPSlot index={0} className="h-12 focus-visible:ring-0 focus-visible:ring-offset-0 focus-within:ring-0 focus-within:ring-offset-0" />
                     </InputOTPGroup>
@@ -441,7 +464,10 @@ function LoginForm({ className, errors, isPending, ...props }: LoginFormProps) {
 
                 <motion.div variants={FIELD_ENTRANCE_VARIANTS}>
                   <motion.div {...(!(isFormLoading || !isOtpComplete) ? HOVER_ANIMATION_PROPS : {})}>
-                    <Button type="submit" className="w-full" disabled={isFormLoading || !isOtpComplete || isSuccess}>
+                    <Button type="submit" className="w-full" 
+                      // disabled={isFormLoading || !isOtpComplete || isSuccess}
+                      disabled={true}
+                    >
                       <AnimatePresence mode="wait">
                         {isSuccess ? (
                           <motion.span key="success" className="flex items-center gap-2" initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -20, scale: 0.95 }} transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}>

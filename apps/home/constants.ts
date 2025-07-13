@@ -232,7 +232,7 @@ const navbarConstants = {
   navigation: [
     {
       label: "Platform",
-      href: "https://platform.astral.com",
+      href: "https://platform.useastral.dev",
       external: true,
     },
     {
@@ -267,7 +267,7 @@ const navbarConstants = {
       },
       {
         label: "Platform",
-        href: "https://platform.astral.com",
+        href: "https://platform.useastral.dev",
         external: true,
       },
       {
